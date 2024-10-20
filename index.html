@@ -9,12 +9,11 @@
 </head>
 <body>
     <div id="loginPage" class="page">
-    <h1>Login with Meta Account</h1>
-    <input type="text" id="metaUsername" placeholder="Enter your Meta Quest username" required>
-    <button id="loginButton">Login</button>
-    <p id="errorMessage" style="color: red; display: none;"></p> <!-- Error message -->
-</div>
-
+        <h1>Login with Meta Account</h1>
+        <input type="text" id="metaUsername" placeholder="Enter your Meta Quest username" required>
+        <button id="loginButton">Login</button>
+        <p id="errorMessage" style="color: red; display: none;"></p> <!-- Error message -->
+    </div>
 
     <div id="mainPage" class="page" style="display: none;">
         <div id="userInfo">
@@ -29,9 +28,12 @@
             <input type="text" id="appName" placeholder="App Name" required>
             <input type="text" id="appImage" placeholder="Image URL" required>
             <input type="text" id="appFileSize" placeholder="File Size (MB)" required>
+            <input type="file" id="apkFile" accept=".apk" required> <!-- File input for APK -->
             <button id="createAppButton">Create App</button>
         </div>
     </div>
+
+    <div id="result"></div> <!-- Result message area -->
 
     <script src="script.js"></script>
 </body>
