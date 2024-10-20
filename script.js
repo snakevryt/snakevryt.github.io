@@ -1,22 +1,44 @@
-// Simulate user data
-let user = {
-    metaAccountName: "User123",
-    metaAccountUrl: "https://www.meta.com/user123"
-};
-
 // Sample app data
 let apps = [];
 
+// Simulated list of valid usernames for testing
+const validUsernames = ["User123", "MetaUser456", "Gamer789"]; // Example usernames
+
 // Handle login
 document.getElementById('loginButton').onclick = function() {
-    // Simulate successful login
-    document.getElementById('metaAccountInfo').innerHTML = `
-        Logged in as <a href="${user.metaAccountUrl}" target="_blank">${user.metaAccountName}</a>
-    `;
-    document.getElementById('loginPage').style.display = 'none';
-    document.getElementById('mainPage').style.display = 'block';
-    displayApps();
+    const usernameInput = document.getElementById('metaUsername').value.trim();
+    const errorMessage = document.getElementById('errorMessage');
+
+    if (usernameInput) {
+        // Call a function to validate the username
+        validateMetaUsername(usernameInput);
+        errorMessage.style.display = 'none';  // Hide error message
+    } else {
+        errorMessage.innerText = 'Please enter a Meta Quest username.';
+        errorMessage.style.display = 'block';
+    }
 };
+
+// Simulated function to validate Meta Quest username
+function validateMetaUsername(username) {
+    // Simulating an API call with a timeout
+    setTimeout(() => {
+        if (validUsernames.includes(username)) {
+            // If user is found, proceed with login
+            const apiUrl = `https://www.meta.com/${username}`;
+            document.getElementById('metaAccountInfo').innerHTML = `
+                Logged in as <a href="${apiUrl}" target="_blank">${username}</a>
+            `;
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('mainPage').style.display = 'block';
+            displayApps();
+        } else {
+            // Show error message if the username is invalid
+            document.getElementById('errorMessage').innerText = 'This is not a valid Meta Quest account.';
+            document.getElementById('errorMessage').style.display = 'block';
+        }
+    }, 1000); // Simulating network delay
+}
 
 // Create a new app
 document.getElementById('createAppButton').onclick = function() {
@@ -29,7 +51,8 @@ document.getElementById('createAppButton').onclick = function() {
             name: appName,
             image: appImage,
             fileSize: appFileSize,
-            downloads: 0  // Initial download count
+            downloads: 0,  // Initial download count
+            apkUrl: appImage  // Assuming the APK URL is the same as the image URL for demo purposes
         };
         apps.push(newApp);
         displayApps();
@@ -48,9 +71,18 @@ function displayApps() {
         listItem.innerHTML = `
             <img src="${app.image}" alt="${app.name}" style="width: 50px; height: 50px;"/> 
             <strong>${app.name}</strong> - ${app.fileSize} MB - Downloads: ${app.downloads}
+            <button onclick="downloadApp('${app.apkUrl}')">Download</button>
         `;
         appListContainer.appendChild(listItem);
     });
+}
+
+// Function to handle APK download
+function downloadApp(apkUrl) {
+    // Simulate downloading the APK
+    alert(`Downloading ${apkUrl}`);
+    // Here you would implement the actual download logic, possibly by opening the APK URL
+    // window.open(apkUrl, '_blank'); // Uncomment to actually open the APK link
 }
 
 // Clear input fields
